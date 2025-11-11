@@ -244,7 +244,13 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" action="https://formsubmit.co/TU_EMAIL_AQUI" method="POST">
+                    <!-- Configuración de FormSubmit -->
+                    <input type="hidden" name="_subject" value="Nuevo mensaje desde Portfolio">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://tu-dominio.com/gracias.html">
+
                     <div class="form-group">
                         <label for="name">Nombre</label>
                         <input type="text" id="name" name="name" required>

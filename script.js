@@ -72,52 +72,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const formFeedback = document.getElementById('formFeedback');
 
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
         // Obtener valores del formulario
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
 
         // Validación básica
         if (!name || !email || !message) {
+            e.preventDefault();
             showFeedback('Por favor completá todos los campos', 'error');
-            return;
+            return false;
         }
 
         // Validar email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
+            e.preventDefault();
             showFeedback('Por favor ingresá un email válido', 'error');
-            return;
+            return false;
         }
 
-        // Simular envío de formulario
-        // En producción, aquí se enviaría a un servidor o servicio de email
+        // Si todas las validaciones pasaron, mostrar indicador de envío
         const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Enviando...';
         submitBtn.disabled = true;
 
-        // Simular delay de envío
-        setTimeout(function() {
-            // Mensaje de éxito
-            showFeedback('¡Mensaje enviado con éxito! Te responderé pronto.', 'success');
-
-            // Resetear formulario
-            contactForm.reset();
-
-            // Restaurar botón
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-
-            // En producción, aquí podrías enviar el formulario con:
-            // - FormSubmit (https://formsubmit.co/)
-            // - EmailJS (https://www.emailjs.com/)
-            // - Tu propio backend
-            // Ejemplo con mailto (alternativa simple):
-            // window.location.href = `mailto:hola@diseñadora.com?subject=Mensaje de ${name}&body=${message}%0D%0A%0D%0AEmail: ${email}`;
-        }, 1500);
+        // El formulario se enviará automáticamente a FormSubmit
+        // FormSubmit redirigirá a la página de confirmación o a la URL especificada en _next
+        return true;
     });
 
     function showFeedback(message, type) {
